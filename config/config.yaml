@@ -1,0 +1,39 @@
+audio:
+  sample_rate: 22050
+  window_size: 3
+  overlap: 0.5
+  n_mels: 128
+  n_fft: 2048
+  hop_length: 512
+  top_db: 20
+
+augmentation:
+  noise_factor: 0.005
+
+labels:
+  wind: 0
+  rain: 1
+  birds: 2
+  crickets: 3
+  thunder: 4
+  gunshots: 5
+  glass_breaking: 6
+  chainsaw: 7
+
+categories:
+  continuous: [wind, rain, birds, crickets, thunder]
+  impulsive: [gunshots, glass_breaking, chainsaw]
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 50
+  early_stopping_patience: 10
+  val_split: 0.15
+  test_split: 0.15
+  random_seed: 42
+
+model:
+  filters: [32, 64, 128, 256]
+  dropout: 0.5
+  num_classes: 8
