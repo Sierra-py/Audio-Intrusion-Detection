@@ -48,3 +48,7 @@ RANDOM_SEED = _cfg["training"]["random_seed"]
 FILTERS = _cfg["model"]["filters"]
 DROPOUT = _cfg["model"]["dropout"]
 NUM_CLASSES = _cfg["model"]["num_classes"]
+
+#Kafka
+KAFKA_BOOTSTRAP_SERVERS = _cfg["kafka"]["bootstrap_servers"]
+KAFKA_TOPIC = _cfg["kafka"]["topic"]
