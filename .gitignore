@@ -27,3 +27,6 @@ Thumbs.db
 
 # VS Code
 *.vscode
+
+# extra files not to be included
+extras/

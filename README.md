@@ -4,9 +4,57 @@ A real-time, end-to-end machine learning system that detects security breaches b
 
 ---
 
-## Demo
+## Live Demo
 
-Available soon.
+🔗 **Dashboard:** [Live Frontend](https://audio-intrusion-detection.vercel.app/)  
+🎥 **Demo Video:** [Watch on YouTube/Loom](https://your-video-link)  
+⚙️ **Backend Health:** [API Status](https://audio-intrusion-detection-production.up.railway.app/health)
+
+---
+
+## How It Works
+
+![Dashboard GIF]("C:\Users\sys_a\Videos\audio-intrusion-dashboard-demo-live-gif-hd.gif")
+
+The system runs as a continuous pipeline across three separate infrastructure components:
+
+**1. Edge Device (`virtual_edge.py`)**  
+Simulates a physical microphone at the perimeter. Picks random audio files, slices them into 1-second chunks, and streams them to a cloud Kafka broker. In a real deployment this would run on embedded hardware (Raspberry Pi or similar) at the site — decoupled from the backend so the stream continues regardless of backend state.
+
+**2. Backend (Railway)**  
+FastAPI server running a background Kafka consumer thread. Every incoming chunk is converted to a mel spectrogram, normalized, and passed through the trained CNN. The result — predicted class, confidence, breach flag — is broadcast in real time to all connected WebSocket clients.
+
+**3. Dashboard (Vercel)**  
+React frontend connected via WebSocket. Updates live with every prediction. Green = perimeter secure. Red = breach detected. Keeps a scrollable log of the last 20 events.
+
+```
+Edge Device (local/embedded)
+    → Redpanda Cloud (Kafka broker)
+        → Railway (FastAPI + CNN inference)
+            → WebSocket
+                → Vercel (React dashboard)
+```
+
+### Breach vs Normal
+
+| Class | Type | Action |
+|---|---|---|
+| Wind | Normal | ✅ Secure |
+| Rain | Normal | ✅ Secure |
+| Birds | Normal | ✅ Secure |
+| Crickets | Normal | ✅ Secure |
+| Thunder | Normal | ✅ Secure |
+| Gunshots | **Breach** | 🚨 Alert |
+| Glass Breaking | **Breach** | 🚨 Alert |
+| Chainsaw | **Breach** | 🚨 Alert |
+
+### Dashboard Preview
+
+![Secure State](https://your-secure-screenshot-link)
+*Normal state — perimeter secure*
+
+![Breach State](https://your-breach-screenshot-link)
+*Breach detected — red alert with event log*
 
 ---
 
