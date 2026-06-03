@@ -43,10 +43,10 @@ def kafka_consumer_loop(loop):
 
         predicted_idx = int(np.argmax(probs))
         predicted_class = LABELS_INVERTED[predicted_idx]
-        confidence = float(probs[predicted_idx])
+        confidence = round(float(probs[predicted_idx]), 2) * 100
         is_breach = predicted_class in ABNORMAL_CLASSES
 
-        result = {'Confidence': confidence, "is_breach": is_breach, "predicted_class": predicted_class}
+        result = {'confidence': confidence, "is_breach": is_breach, "predicted_class": predicted_class}
         if is_breach:
             print(f"breach Detected, type:{predicted_class}")
         else:
