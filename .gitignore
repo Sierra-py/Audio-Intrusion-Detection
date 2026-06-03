@@ -4,9 +4,6 @@
 # Data - too large for GitHub
 data/
 
-# Model weights - too large for GitHub
-models/
-
 # Python cache
 __pycache__/
 *.pyc
