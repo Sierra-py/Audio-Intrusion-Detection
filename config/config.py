@@ -52,3 +52,9 @@ NUM_CLASSES = _cfg["model"]["num_classes"]
 #Kafka
 KAFKA_BOOTSTRAP_SERVERS = _cfg["kafka"]["bootstrap_servers"]
 KAFKA_TOPIC = _cfg["kafka"]["topic"]
+
+# Redpanda
+KAFKA_SASL_MECHANISM = _cfg["kafka"]["sasl_mechanism"]
+KAFKA_SECURITY_PROTOCOL = _cfg["kafka"]["security_protocol"]
+KAFKA_USERNAME = os.getenv("REDPANDA_USERNAME")
+KAFKA_PASSWORD = os.getenv("REDPANDA_PASSWORD")

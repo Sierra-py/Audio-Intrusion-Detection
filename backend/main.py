@@ -23,14 +23,21 @@ import numpy as np
 import asyncio
 from scripts.inference import predict as run_predict, load_model, load_norm_stats
 from scripts.inference import audio_to_mel
-from config.config import KAFKA_BOOTSTRAP_SERVERS, KAFKA_TOPIC, LABELS_INVERTED
+from config.config import (KAFKA_BOOTSTRAP_SERVERS, KAFKA_TOPIC, LABELS_INVERTED,
+                            KAFKA_SASL_MECHANISM, KAFKA_SECURITY_PROTOCOL, KAFKA_USERNAME, KAFKA_PASSWORD)
 
 
 def kafka_consumer_loop(loop):
 
     ABNORMAL_CLASSES = {"gunshots", "chainsaw", "glass_breaking"}
-    consumer = KafkaConsumer(KAFKA_TOPIC, bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
-
+    consumer = KafkaConsumer(
+        KAFKA_TOPIC,
+        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+        security_protocol=KAFKA_SECURITY_PROTOCOL,
+        sasl_mechanism=KAFKA_SASL_MECHANISM,
+        sasl_plain_username=KAFKA_USERNAME,
+        sasl_plain_password=KAFKA_PASSWORD,
+    )
     for msg in consumer:
         chunk = np.frombuffer(msg.value, dtype=np.float32)
         mel = audio_to_mel(chunk)

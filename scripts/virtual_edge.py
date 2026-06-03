@@ -9,7 +9,7 @@ from kafka import KafkaProducer
 import sys
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from config.config import SR, KAFKA_BOOTSTRAP_SERVERS, KAFKA_TOPIC
+from config.config import SR, KAFKA_BOOTSTRAP_SERVERS, KAFKA_TOPIC, KAFKA_SASL_MECHANISM, KAFKA_SECURITY_PROTOCOL, KAFKA_USERNAME, KAFKA_PASSWORD
 
 def get_random_audio_file(raw_dir="data/raw"):
     all_files = list(Path(raw_dir).rglob("*.mp3"))
@@ -19,8 +19,13 @@ def stream_audio(filepath):
     y, _ = librosa.load(filepath, sr=SR, mono=True)
     window_samples = SR  # 1 second
 
-    producer = KafkaProducer(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
-
+    producer = KafkaProducer(
+        bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
+        security_protocol=KAFKA_SECURITY_PROTOCOL,
+        sasl_mechanism=KAFKA_SASL_MECHANISM,
+        sasl_plain_username=KAFKA_USERNAME,
+        sasl_plain_password=KAFKA_PASSWORD,
+    )
     print(f"Streaming: {filepath}")
     chunks = 0
 
