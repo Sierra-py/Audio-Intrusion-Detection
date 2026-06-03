@@ -5,7 +5,7 @@ function App() {
   const [log, setLog] = useState([]);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8000/ws");
+    const ws = new WebSocket("wss://audio-intrusion-detection-production.up.railway.app/ws");
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setPrediction(data);
