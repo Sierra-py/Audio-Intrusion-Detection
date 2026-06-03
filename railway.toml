@@ -5,3 +5,7 @@ watchPatterns = ["backend/**", "src/**", "config/**", "models/**", "scripts/infe
 
 [deploy]
 startCommand = "uvicorn backend.main:app --host 0.0.0.0 --port 8000"
+
+[[services]]
+protocol = "tcp"
+port = 8000
